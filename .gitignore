@@ -1,0 +1,33 @@
+# Dependencies
+node_modules/
+
+# Build output (contains bundled secrets — never commit)
+dist/
+dist-ssr/
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+*.local
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Claude Code local state
+.claude/
+
+# Artefatos de análise (não fazem parte do app deployável)
+*.pdf
+gerar_relatorio_omie.py
+gerar_relatorio_uso_omie.py
+apresentacao-financiamentos.html

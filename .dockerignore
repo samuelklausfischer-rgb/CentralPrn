@@ -1,0 +1,25 @@
+# Dependências e build (reconstruídos no Dockerfile)
+node_modules
+dist
+dist-ssr
+
+# Segredos — NUNCA entram no contexto de build/imagem
+.env
+.env.*
+!.env.example
+*.local
+
+# Git e estado local
+.git
+.gitignore
+.claude
+
+# Artefatos de análise (não fazem parte do app)
+*.pdf
+*.py
+apresentacao-financiamentos.html
+
+# Logs / SO
+*.log
+.DS_Store
+Thumbs.db
