@@ -1,3 +1,5 @@
+import { env } from '../env.js'
+
 const BASE_URL = '/omie-api'
 
 export function delay(ms) {
@@ -172,13 +174,13 @@ export function makeOmieClient(appKey, appSecret, empresaKey) {
 
 export const omieClients = {
   prn: makeOmieClient(
-    import.meta.env.VITE_APP_KEY_OMIE,
-    import.meta.env.VITE_APP_SECRET_OMIE,
+    env('VITE_APP_KEY_OMIE'),
+    env('VITE_APP_SECRET_OMIE'),
     'prn'
   ),
   medimagem: makeOmieClient(
-    import.meta.env.VITE_APP_KEY_OMIE_MEDIMAGEM,
-    import.meta.env.VITE_APP_SECRET_OMIE_MEDIMAGEM,
+    env('VITE_APP_KEY_OMIE_MEDIMAGEM'),
+    env('VITE_APP_SECRET_OMIE_MEDIMAGEM'),
     'medimagem'
   ),
 }

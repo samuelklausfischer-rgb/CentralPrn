@@ -1,0 +1,3 @@
+# Scripts de shell DEVEM ter fim de linha LF (senão o shebang quebra no Linux/container)
+*.sh text eol=lf
+docker-entrypoint.d/* text eol=lf

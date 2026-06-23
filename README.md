@@ -39,15 +39,24 @@ O app é uma SPA estática + um proxy reverso para a Omie. Tudo isso é empacota
 `Dockerfile` (multi-stage: build Vite → nginx). O `nginx.conf` recria o proxy `/omie-api`
 que em dev é feito pelo Vite — **sem ele, nenhuma chamada à Omie funciona em produção**.
 
+> **Variáveis de ambiente são lidas em RUNTIME, não no build.** Na subida do container,
+> `docker-entrypoint.d/40-config.sh` gera `/config.js` com os valores das variáveis de
+> ambiente; o `index.html` carrega esse arquivo e popula `window.__ENV__`, lido por
+> `src/env.js`. Isso evita o clássico problema de variáveis Vite "assadas" no build
+> (build-arg/cache). Você só precisa definir as variáveis na aba **Environment** — sem
+> rebuild para trocar valores, basta **Restart**.
+
 ### Passo a passo
 1. No EasyPanel, crie um **App** e em **Source** selecione este repositório GitHub
    (`CentralPrn`, branch `main`).
 2. Em **Build**, escolha **Dockerfile** (o EasyPanel detecta o `Dockerfile` na raiz).
-3. Em **Environment Variables**, defina as 6 variáveis `VITE_*` da tabela acima.
-   > ⚠️ Como é um app Vite, essas variáveis são lidas em **tempo de build** e o EasyPanel
-   > as repassa automaticamente como `--build-arg` para o Dockerfile.
+3. Em **Environment**, defina as 6 variáveis `VITE_*` da tabela acima (nomes exatos).
 4. A porta do container é **80** (já exposta no Dockerfile).
 5. Configure o **domínio** e faça o **Deploy**.
+
+> Diagnóstico: nos logs do container procure a linha `[40-config] /config.js gerado — N
+> variável(is) preenchida(s) de 6`. Se `N < 6`, alguma variável não foi definida na aba
+> Environment. No navegador, abra `https://SEU_DOMINIO/config.js` para ver o que chegou.
 
 ### Segurança — leia antes de expor publicamente
 As variáveis `VITE_*` são embutidas no JavaScript do navegador. Isso significa que a
